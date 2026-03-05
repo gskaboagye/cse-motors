@@ -1,0 +1,142 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+background:url("/images/site/checkerboard.jpg");
+}
+
+.page{
+background:white;
+max-width:900px;
+margin:auto;
+border:3px solid #00bfff;
+border-radius:10px;
+padding:10px;
+}
+
+/* HEADER */
+
+.top-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+}
+
+.top-header a{
+text-decoration:none;
+color:black;
+}
+
+/* NAV */
+
+nav{
+background:#2d2d44;
+}
+
+nav ul{
+display:flex;
+justify-content:space-around;
+list-style:none;
+padding:10px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:20px;
+}
+
+.hero img{
+width:350px;
+}
+
+.hero-text{
+color:#0099cc;
+}
+
+.hero-text h2{
+margin-bottom:10px;
+}
+
+.hero-text ul{
+list-style:none;
+margin-bottom:10px;
+}
+
+.btn{
+background:#00a7c7;
+color:black;
+padding:10px 20px;
+border:none;
+font-weight:bold;
+}
+
+/* CONTENT AREA */
+
+.content{
+display:grid;
+grid-template-columns:1fr 1fr;
+margin-top:30px;
+gap:30px;
+}
+
+/* UPGRADES */
+
+.upgrade-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:10px;
+}
+
+.upgrade-grid div{
+background:#00a7c7;
+text-align:center;
+padding:10px;
+}
+
+.upgrade-grid img{
+width:70px;
+display:block;
+margin:auto;
+}
+
+/* REVIEWS */
+
+.reviews ul{
+margin-top:10px;
+padding-left:20px;
+}
+
+footer{
+margin-top:20px;
+font-size:14px;
+}
+
+/* MOBILE */
+
+@media screen and (max-width:768px){
+
+.hero{
+flex-direction:column;
+}
+
+.content{
+grid-template-columns:1fr;
+}
+
+}
