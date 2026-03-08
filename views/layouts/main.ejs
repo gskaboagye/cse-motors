@@ -11,17 +11,23 @@
 
 <body>
 
-  <header>
+  <div class="page">
+
+    <!-- Header -->
     <%- include('../partials/header') %>
-  </header>
 
-  <main>
-    <%- body %>
-  </main>
+    <!-- Navigation -->
+    <%- include('../partials/navigation') %>
 
-  <footer>
+    <!-- Main Content -->
+    <main>
+      <%- body %>
+    </main>
+
+    <!-- Footer -->
     <%- include('../partials/footer') %>
-  </footer>
+
+  </div>
 
 </body>
 
