@@ -3,10 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-
-  <link rel="stylesheet" href="/css/styles.css">
+  <meta name="description" content="CSE Motors - Explore custom, sedan, SUV, and truck vehicles with upgrades and reviews.">
+  
+  <title><%= title || 'CSE Motors | Vehicle Details' %></title>
+  <link rel="stylesheet" href="/css/styles.css" media="screen">
 </head>
 
 <body>
@@ -20,7 +22,7 @@
     <%- include('../partials/navigation') %>
 
     <!-- Main Content -->
-    <main>
+    <main role="main">
       <%- body %>
     </main>
 

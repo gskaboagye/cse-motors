@@ -1,29 +1,69 @@
-const express = require("express")
-const path = require("path")
-const expressLayouts = require("express-ejs-layouts")
+const express = require("express");
+const path = require("path");
+const expressLayouts = require("express-ejs-layouts");
+require("dotenv").config();
 
-const app = express()
+const app = express();
 
-// View engine
-app.set("view engine", "ejs")
+// ================================
+// VIEW ENGINE
+// ================================
+app.set("view engine", "ejs");
 
-// Layout configuration
-app.use(expressLayouts)
-app.set("layout", "layouts/main")
+// ================================
+// LAYOUTS
+// ================================
+app.use(expressLayouts);
+app.set("layout", "layouts/main");
 
-// Static files
-app.use(express.static(path.join(__dirname, "public")))
+// ================================
+// STATIC FILES
+// ================================
+app.use(express.static(path.join(__dirname, "public")));
 
-// Route for homepage
+// ================================
+// BODY PARSING (IMPORTANT)
+// ================================
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// ================================
+// ROUTES
+// ================================
+const inventoryRoute = require("./routes/inventoryRoute");
+
+// Use inventory routes
+app.use("/inv", inventoryRoute);
+
+// ================================
+// HOME ROUTE
+// ================================
 app.get("/", (req, res) => {
   res.render("index", {
     title: "CSE Motors"
-  })
-})
+  });
+});
 
-// Port
-const PORT = process.env.PORT || 3000
+// ================================
+// 404 HANDLER (REQUIRED)
+// ================================
+app.use((req, res, next) => {
+  const err = new Error("Page Not Found");
+  err.status = 404;
+  next(err);
+});
+
+// ================================
+// ERROR HANDLER (REQUIRED)
+// ================================
+const errorHandler = require("./middleware/errorHandler");
+app.use(errorHandler);
+
+// ================================
+// SERVER
+// ================================
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});

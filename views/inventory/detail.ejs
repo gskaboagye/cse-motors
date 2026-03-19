@@ -1,0 +1,15 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navigation") %>
+
+<main role="main">
+  <!-- Page Title -->
+  <h1><%= title %></h1>
+
+  <!-- Vehicle Detail Section -->
+  <section class="detail-container" aria-label="Vehicle Details">
+    <!-- detailHTML generated dynamically from utility function -->
+    <%- detailHTML %>
+  </section>
+</main>
+
+<%- include("../partials/footer") %>
