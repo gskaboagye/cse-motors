@@ -1,10 +1,13 @@
-// Build navigation
+// Build navigation (matches assignment UI)
 async function getNav() {
   return `
   <nav role="navigation" aria-label="Main site navigation">
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="/inv/detail/1">Sample Vehicle</a></li>
+      <li><a href="/inv/detail/1">Custom</a></li>
+      <li><a href="/inv/detail/1">Sedan</a></li>
+      <li><a href="/inv/detail/1">SUV</a></li>
+      <li><a href="/inv/detail/1">Truck</a></li>
     </ul>
   </nav>`;
 }
@@ -13,6 +16,7 @@ async function getNav() {
 function buildVehicleDetail(vehicle) {
   return `
     <div class="vehicle-detail">
+
       <div class="vehicle-image">
         <img 
           src="${vehicle.inv_image}" 
@@ -39,7 +43,9 @@ function buildVehicleDetail(vehicle) {
         <p><strong>Color:</strong> ${vehicle.inv_color}</p>
 
         <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+
       </div>
+
     </div>
   `;
 }
