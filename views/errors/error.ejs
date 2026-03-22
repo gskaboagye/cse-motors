@@ -1,13 +1,9 @@
-<%- include("../partials/header") %>
+<h1><%= title %></h1>
 
-<main role="main" class="error-page">
-  <h1>Error</h1>
+<section class="error-page">
   <p><%= message %></p>
-  
-  <!-- Footer-based error link for rubric -->
-  <p>
-    <a href="/inv/error" class="error-link" aria-label="Trigger footer error again">Trigger Footer Error</a>
-  </p>
-</main>
 
-<%- include("../partials/footer") %>
+  <p>
+    <a href="/" aria-label="Return to home page">Return Home</a>
+  </p>
+</section>

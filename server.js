@@ -9,6 +9,7 @@ const app = express();
 // VIEW ENGINE
 // ================================
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // ================================
 // LAYOUTS
@@ -22,17 +23,29 @@ app.set("layout", "layouts/main");
 app.use(express.static(path.join(__dirname, "public")));
 
 // ================================
-// BODY PARSING (IMPORTANT)
+// BODY PARSING
 // ================================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // ================================
+// GLOBAL NAVIGATION
+// ================================
+const utilities = require("./utilities");
+
+app.use(async (req, res, next) => {
+  try {
+    res.locals.nav = await utilities.getNav();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+// ================================
 // ROUTES
 // ================================
 const inventoryRoute = require("./routes/inventoryRoute");
-
-// Use inventory routes
 app.use("/inv", inventoryRoute);
 
 // ================================
@@ -45,7 +58,7 @@ app.get("/", (req, res) => {
 });
 
 // ================================
-// 404 HANDLER (REQUIRED)
+// 404 HANDLER
 // ================================
 app.use((req, res, next) => {
   const err = new Error("Page Not Found");
@@ -54,7 +67,7 @@ app.use((req, res, next) => {
 });
 
 // ================================
-// ERROR HANDLER (REQUIRED)
+// ERROR HANDLER
 // ================================
 const errorHandler = require("./middleware/errorHandler");
 app.use(errorHandler);

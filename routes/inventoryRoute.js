@@ -2,25 +2,16 @@ const express = require("express");
 const router = express.Router();
 const invController = require("../controllers/inventoryController");
 
-// ============================
-// Vehicle Detail Route
-// Handles request for a specific vehicle by ID
-// ============================
+// ================================
+// VEHICLE DETAIL ROUTE
+// URL: /inv/detail/:inv_id
+// ================================
 router.get("/detail/:inv_id", invController.getInventoryItem);
 
-// ============================
-// Intentional Footer-based Error Route
-// Required for rubric testing of error handling
-// ============================
+// ================================
+// INTENTIONAL 500 ERROR ROUTE
+// URL: /inv/error
+// ================================
 router.get("/error", invController.triggerError);
-
-// ============================
-// 404 handler (optional, can be in app.js)
-// ============================
-// router.use((req, res, next) => {
-//   const err = new Error("Page Not Found");
-//   err.status = 404;
-//   next(err);
-// });
 
 module.exports = router;
