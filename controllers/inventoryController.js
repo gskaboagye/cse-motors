@@ -1,21 +1,28 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities");
 
+// ================================
+// BUILD INVENTORY BY CLASSIFICATION
+// ================================
 async function buildByClassificationId(req, res, next) {
   try {
     const classification_id = req.params.classificationId;
-    const data = await invModel.getInventoryByClassificationId(classification_id);
 
-    if (!data || data.length === 0) {
-      const err = new Error("No vehicles found for this classification.");
-      err.status = 404;
-      throw err;
-    }
+    const data = await invModel.getInventoryByClassificationId(classification_id);
+    const classifications = await invModel.getClassifications();
+
+    const selectedClassification = classifications.find(
+      c => c.classification_id == classification_id
+    );
+
+    const className = selectedClassification
+      ? selectedClassification.classification_name
+      : "Vehicle Classification";
 
     const grid = await utilities.buildClassificationGrid(data);
 
     res.render("inventory/classification", {
-      title: `${data[0].classification_name} vehicles`,
+      title: `${className} vehicles`,
       grid
     });
   } catch (error) {
@@ -23,13 +30,17 @@ async function buildByClassificationId(req, res, next) {
   }
 }
 
+// ================================
+// GET VEHICLE DETAIL
+// ================================
 async function getInventoryItem(req, res, next) {
   try {
     const inv_id = req.params.inv_id;
+
     const data = await invModel.getInventoryItemById(inv_id);
 
     if (!data) {
-      const err = new Error(`Vehicle with id ${inv_id} not found`);
+      const err = new Error("Vehicle not found");
       err.status = 404;
       throw err;
     }
@@ -45,6 +56,9 @@ async function getInventoryItem(req, res, next) {
   }
 }
 
+// ================================
+// INTENTIONAL 500 ERROR
+// ================================
 function triggerError(req, res, next) {
   const err = new Error("Intentional Server Error");
   err.status = 500;
