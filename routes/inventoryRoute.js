@@ -3,6 +3,12 @@ const router = express.Router();
 const invController = require("../controllers/inventoryController");
 
 // ================================
+// CLASSIFICATION ROUTE
+// URL: /inv/type/:classificationId
+// ================================
+router.get("/type/:classificationId", invController.buildByClassificationId);
+
+// ================================
 // VEHICLE DETAIL ROUTE
 // URL: /inv/detail/:inv_id
 // ================================

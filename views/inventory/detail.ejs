@@ -1,5 +1,7 @@
-<h1><%= title %></h1>
+<main>
+  <h1><%= title %></h1>
 
-<section class="detail-container" aria-label="Vehicle Details">
-  <%- detailHTML %>
-</section>
+  <section class="vehicle-detail" aria-label="Vehicle Details">
+    <%- detailHTML || "<p class='notice'>Vehicle details not available.</p>" %>
+  </section>
+</main>

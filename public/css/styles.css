@@ -244,8 +244,84 @@ main h1 {
 }
 
 /* ================================
+   CLASSIFICATION VIEW
+================================= */
+.classification-view {
+  margin-top: 20px;
+}
+
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+}
+
+#inv-display li {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#inv-display li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+#inv-display img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 6px;
+}
+
+.namePrice {
+  margin-top: 10px;
+}
+
+.namePrice hr {
+  margin: 10px 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.namePrice h2 {
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+.namePrice h2 a {
+  color: #2d2d44;
+  text-decoration: none;
+}
+
+.namePrice h2 a:hover,
+.namePrice h2 a:focus {
+  color: #00a7c7;
+  text-decoration: underline;
+}
+
+.namePrice span {
+  font-weight: bold;
+  color: #00a7c7;
+  font-size: 1.1rem;
+}
+
+.notice {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #b00020;
+}
+
+/* ================================
    VEHICLE DETAIL VIEW
 ================================= */
+.detail-container,
 .vehicle-wrapper {
   margin-top: 20px;
 }
@@ -376,5 +452,9 @@ footer a:focus {
   nav ul {
     flex-direction: column;
     gap: 8px;
+  }
+
+  #inv-display {
+    grid-template-columns: 1fr;
   }
 }

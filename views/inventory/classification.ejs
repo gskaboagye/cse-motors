@@ -1,13 +1,5 @@
 <h1><%= title %></h1>
 
-<section class="classification-view">
-  <ul>
-    <% grid && grid.length ? grid.forEach(vehicle => { %>
-      <li>
-        <a href="/inv/detail/<%= vehicle.inv_id %>">
-          <%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %>
-        </a>
-      </li>
-    <% }) : '' %>
-  </ul>
+<section class="classification-view" aria-label="Vehicle Classification Results">
+  <%- grid %>
 </section>
