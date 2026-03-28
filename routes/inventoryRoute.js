@@ -3,6 +3,36 @@ const router = express.Router();
 const invController = require("../controllers/inventoryController");
 
 // ================================
+// MANAGEMENT VIEW
+// URL: /inv/
+// ================================
+router.get("/", invController.buildManagementView);
+
+// ================================
+// ADD CLASSIFICATION VIEW
+// URL: /inv/add-classification
+// ================================
+router.get("/add-classification", invController.buildAddClassification);
+
+// ================================
+// PROCESS ADD CLASSIFICATION
+// URL: /inv/add-classification
+// ================================
+router.post("/add-classification", invController.addClassification);
+
+// ================================
+// ADD INVENTORY VIEW
+// URL: /inv/add-inventory
+// ================================
+router.get("/add-inventory", invController.buildAddInventory);
+
+// ================================
+// PROCESS ADD INVENTORY
+// URL: /inv/add-inventory
+// ================================
+router.post("/add-inventory", invController.addInventory);
+
+// ================================
 // CLASSIFICATION ROUTE
 // URL: /inv/type/:classificationId
 // ================================
