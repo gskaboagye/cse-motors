@@ -4,15 +4,24 @@
   <p class="notice"><%= messages %></p>
 <% } %>
 
-<form action="/inv/add-classification" method="post">
-  <label>Classification Name</label>
-  <input 
-    type="text" 
-    name="classification_name" 
-    required 
-    pattern="^[A-Za-z0-9]+$"
-    title="No spaces or special characters allowed"
-  >
+<form action="/inv/add-classification" method="post" class="inventory-form">
 
-  <button type="submit">Add Classification</button>
+  <div class="form-group full-width">
+    <label for="classification_name">Classification Name</label>
+    <input
+      type="text"
+      id="classification_name"
+      name="classification_name"
+      value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
+      required
+      pattern="^[A-Za-z0-9]+$"
+      title="No spaces or special characters allowed"
+    >
+    <small>No spaces or special characters allowed.</small>
+  </div>
+
+  <div class="form-actions full-width">
+    <button type="submit" class="btn">Add Classification</button>
+  </div>
+
 </form>
