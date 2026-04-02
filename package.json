@@ -10,12 +10,16 @@
   "author": "Godfred Sefa Aboagye",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.11.5"
   },
   "devDependencies": {

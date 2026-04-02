@@ -1,13 +1,22 @@
 <header>
   <div class="top-header">
-    <!-- Site Logo / Title -->
     <h1 class="site-title">
       <a href="/" aria-label="Go to CSE Motors home page">CSE Motors</a>
     </h1>
 
-    <!-- Account Link -->
     <nav class="account-nav">
-      <a href="#" aria-label="Go to your account">My Account</a>
+      <% if (loggedin && accountData) { %>
+        <a href="/account/" aria-label="Go to account management">
+          Welcome <%= accountData.account_firstname %>
+        </a>
+        <a href="/account/logout" aria-label="Log out of your account">
+          Logout
+        </a>
+      <% } else { %>
+        <a href="/account/login" aria-label="Go to your account">
+          My Account
+        </a>
+      <% } %>
     </nav>
   </div>
 </header>

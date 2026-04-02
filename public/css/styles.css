@@ -7,12 +7,29 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary: #00a7c7;
+  --primary-dark: #008aa5;
+  --dark: #2d2d44;
+  --text: #222;
+  --muted: #555;
+  --light: #f8fbfc;
+  --border: #d9e3e8;
+  --success-bg: #ecfdf5;
+  --success-border: #10b981;
+  --success-text: #065f46;
+  --error-bg: #fff4f4;
+  --error-border: #f0b6b6;
+  --error-accent: #b00020;
+  --error-text: #8b0000;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: url("/images/site/checkerboard.jpg") no-repeat center center fixed;
   background-size: cover;
   line-height: 1.6;
-  color: #222;
+  color: var(--text);
 }
 
 /* ================================
@@ -35,28 +52,67 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 0 16px;
   gap: 1rem;
+  border-bottom: 1px solid #e8eef1;
+}
+
+.site-title {
+  margin: 0;
+}
+
+.site-title a,
+.top-header h1 a {
+  text-decoration: none;
+  font-size: 2rem;
+  color: var(--text);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.account-nav,
+.account-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
 }
 
 .top-header a {
   text-decoration: none;
-  color: #555;
+  color: var(--muted);
   font-weight: bold;
 }
 
-.top-header h1 a {
-  font-size: 2rem;
-  color: #222;
+.account-nav a,
+.account-tools a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: #f3f9fb;
+  border: 1px solid #d6edf3;
+  color: var(--dark);
+  transition: all 0.25s ease;
+}
+
+.account-nav a:hover,
+.account-nav a:focus,
+.account-tools a:hover,
+.account-tools a:focus {
+  background: #e8f8fc;
+  color: var(--primary-dark);
+  border-color: #bfeaf2;
+  text-decoration: none;
 }
 
 /* ================================
    NAVIGATION
 ================================= */
 nav {
-  background: #2d2d44;
-  border-radius: 5px;
-  margin-top: 10px;
+  background: var(--dark);
+  border-radius: 8px;
+  margin-top: 14px;
 }
 
 nav ul {
@@ -64,7 +120,7 @@ nav ul {
   justify-content: space-around;
   align-items: center;
   list-style: none;
-  padding: 10px 0;
+  padding: 12px 0;
   flex-wrap: wrap;
 }
 
@@ -94,8 +150,18 @@ main {
 
 main h1 {
   margin-bottom: 15px;
-  color: #222;
+  color: var(--text);
   font-size: 2rem;
+}
+
+main h2 {
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+main h3 {
+  margin-bottom: 10px;
+  color: var(--dark);
 }
 
 /* ================================
@@ -154,7 +220,7 @@ main h1 {
 
 .btn {
   display: inline-block;
-  background: #00a7c7;
+  background: var(--primary);
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -197,7 +263,7 @@ main h1 {
 }
 
 .upgrade-grid figure {
-  background: #00a7c7;
+  background: var(--primary);
   text-align: center;
   padding: 10px;
   border-radius: 5px;
@@ -259,10 +325,10 @@ main h1 {
   display: block;
   background: #f4fbfd;
   border: 1px solid #bfeaf2;
-  border-left: 5px solid #00a7c7;
+  border-left: 5px solid var(--primary);
   padding: 14px 16px;
   border-radius: 8px;
-  color: #2d2d44;
+  color: var(--dark);
   font-weight: bold;
   text-decoration: none;
   transition: background 0.3s ease, transform 0.2s ease;
@@ -272,6 +338,55 @@ main h1 {
 .management-links li a:focus {
   background: #e8f8fc;
   transform: translateX(4px);
+}
+
+/* Week 5 account management cards/links */
+.account-panel,
+.account-management,
+.management-panel {
+  margin-top: 20px;
+  max-width: 760px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdfe 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.account-panel p,
+.account-management p,
+.management-panel p {
+  margin-bottom: 12px;
+}
+
+.account-panel a,
+.account-management a,
+.management-panel a {
+  color: var(--primary-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.account-panel a:hover,
+.account-panel a:focus,
+.account-management a:hover,
+.account-management a:focus,
+.management-panel a:hover,
+.management-panel a:focus {
+  text-decoration: underline;
+}
+
+.account-summary {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.account-summary-item {
+  background: #f7fbfc;
+  border: 1px solid #dcecf1;
+  border-radius: 10px;
+  padding: 14px 16px;
 }
 
 /* ================================
@@ -327,34 +442,61 @@ main h1 {
 }
 
 .namePrice h2 a {
-  color: #2d2d44;
+  color: var(--dark);
   text-decoration: none;
 }
 
 .namePrice h2 a:hover,
 .namePrice h2 a:focus {
-  color: #00a7c7;
+  color: var(--primary);
   text-decoration: underline;
 }
 
 .namePrice span {
   font-weight: bold;
-  color: #00a7c7;
+  color: var(--primary);
   font-size: 1.1rem;
 }
 
 /* ================================
-   NOTICE / MESSAGE
+   NOTICE / MESSAGE / ERRORS
 ================================= */
 .notice {
   margin: 20px 0;
   padding: 12px 15px;
   font-weight: bold;
-  color: #8b0000;
-  background: #fff4f4;
-  border: 1px solid #f0b6b6;
-  border-left: 5px solid #b00020;
+  color: var(--error-text);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-left: 5px solid var(--error-accent);
   border-radius: 6px;
+}
+
+.success-message,
+.alert-success {
+  margin: 20px 0;
+  padding: 12px 15px;
+  font-weight: bold;
+  color: var(--success-text);
+  background: var(--success-bg);
+  border: 1px solid #a7f3d0;
+  border-left: 5px solid var(--success-border);
+  border-radius: 6px;
+}
+
+.errors {
+  margin: 20px 0;
+  padding: 14px 18px;
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-left: 5px solid #dc2626;
+  border-radius: 8px;
+  color: #991b1b;
+  list-style-position: inside;
+}
+
+.errors li {
+  margin-bottom: 6px;
 }
 
 /* ================================
@@ -372,6 +514,36 @@ main h1 {
   border-radius: 10px;
 }
 
+/* Week 5 account forms */
+.account-form,
+.login-form,
+.register-form,
+.update-form {
+  display: grid;
+  gap: 18px;
+  margin: 20px auto 0;
+  max-width: 700px;
+  background: #fafcfd;
+  padding: 24px;
+  border: 1px solid #dde7ec;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.account-form-card {
+  margin: 22px 0;
+  max-width: 760px;
+  background: #fff;
+  padding: 24px;
+  border: 1px solid #dde7ec;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.account-form-card h2 {
+  margin-bottom: 14px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -380,7 +552,7 @@ main h1 {
 .form-group label {
   font-weight: bold;
   margin-bottom: 8px;
-  color: #2d2d44;
+  color: var(--dark);
 }
 
 .form-group input,
@@ -392,13 +564,14 @@ main h1 {
   border-radius: 6px;
   font-size: 1rem;
   background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #00a7c7;
+  border-color: var(--primary);
   box-shadow: 0 0 4px rgba(0, 167, 199, 0.4);
 }
 
@@ -407,10 +580,23 @@ main h1 {
   min-height: 110px;
 }
 
-.form-group small {
+.form-group small,
+.password-hint,
+.form-link {
   margin-top: 6px;
-  color: #555;
-  font-size: 0.9rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.form-link a {
+  color: var(--primary-dark);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.form-link a:hover,
+.form-link a:focus {
+  text-decoration: underline;
 }
 
 .full-width {
@@ -419,6 +605,27 @@ main h1 {
 
 .form-actions {
   margin-top: 5px;
+}
+
+button,
+input[type="submit"] {
+  background: var(--dark);
+  color: #fff;
+  padding: 12px 18px;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover,
+button:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  background: #1f1f31;
+  transform: translateY(-1px);
 }
 
 /* ================================
@@ -457,7 +664,7 @@ main h1 {
 
 .vehicle-info h2 {
   margin-bottom: 15px;
-  color: #2d2d44;
+  color: var(--dark);
 }
 
 .vehicle-info p {
@@ -467,7 +674,7 @@ main h1 {
 .vehicle-info .price {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #00a7c7;
+  color: var(--primary);
 }
 
 .vehicle-info .mileage {
@@ -526,6 +733,11 @@ footer a:focus {
     text-align: center;
   }
 
+  .account-nav,
+  .account-tools {
+    justify-content: center;
+  }
+
   .hero {
     flex-direction: column;
     text-align: center;
@@ -564,5 +776,22 @@ footer a:focus {
   .inventory-form {
     grid-template-columns: 1fr;
     padding: 15px;
+  }
+
+  .account-form,
+  .login-form,
+  .register-form,
+  .update-form,
+  .account-form-card {
+    padding: 18px;
+  }
+
+  main h1 {
+    font-size: 1.7rem;
+  }
+
+  .site-title a,
+  .top-header h1 a {
+    font-size: 1.75rem;
   }
 }

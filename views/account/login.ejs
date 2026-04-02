@@ -1,0 +1,45 @@
+<% if (typeof notice !== "undefined" && notice.length > 0) { %>
+  <div class="notice">
+    <%= notice[0] %>
+  </div>
+<% } %>
+
+<% if (errors) { %>
+  <ul class="errors">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<h1><%= title %></h1>
+
+<form action="/account/login" method="post" class="account-form">
+  <div class="form-group">
+    <label for="account_email">Email Address</label>
+    <input
+      type="email"
+      id="account_email"
+      name="account_email"
+      required
+      value="<%= typeof account_email !== 'undefined' ? account_email : '' %>"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="account_password">Password</label>
+    <input
+      type="password"
+      id="account_password"
+      name="account_password"
+      required
+    >
+  </div>
+
+  <button type="submit">Login</button>
+</form>
+
+<p class="form-link">
+  Need an account?
+  <a href="/account/register">Register here</a>
+</p>
