@@ -60,6 +60,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60,
     },
   })
@@ -90,6 +91,13 @@ app.use(async (req, res, next) => {
 // JWT TOKEN CHECK
 // ================================
 app.use(utilities.checkJWTToken)
+
+// ================================
+// HEALTH CHECK ROUTE
+// ================================
+app.get("/healthz", (req, res) => {
+  res.status(200).send("ok")
+})
 
 // ================================
 // ROUTES
