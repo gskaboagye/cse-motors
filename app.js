@@ -42,14 +42,26 @@ app.use(express.json())
 app.use(cookieParser())
 
 // ================================
+// TRUST PROXY FOR RENDER / PRODUCTION
+// ================================
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1)
+}
+
+// ================================
 // SESSION & FLASH
 // ================================
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "superSecretKey",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     name: "sessionId",
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60,
+    },
   })
 )
 
