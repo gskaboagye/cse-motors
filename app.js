@@ -8,10 +8,10 @@ require("dotenv").config()
 
 const app = express()
 
-// ================================
-// UTILITIES
-// ================================
 const utilities = require("./utilities")
+const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
+const errorHandler = require("./middleware/errorHandler")
 
 // ================================
 // VIEW ENGINE
@@ -59,15 +59,19 @@ app.use(flash())
 // GLOBAL LOCALS
 // ================================
 app.use(async (req, res, next) => {
+  res.locals.notice = req.flash("notice")
+  res.locals.loggedin = false
+  res.locals.accountData = null
+  res.locals.nav = ""
+
   try {
     res.locals.nav = await utilities.getNav()
-    res.locals.notice = req.flash("notice")
-    res.locals.loggedin = false
-    res.locals.accountData = null
-    next()
   } catch (err) {
-    next(err)
+    console.error("Navigation load error:", err.message)
+    res.locals.nav = ""
   }
+
+  next()
 })
 
 // ================================
@@ -78,9 +82,6 @@ app.use(utilities.checkJWTToken)
 // ================================
 // ROUTES
 // ================================
-const inventoryRoute = require("./routes/inventoryRoute")
-const accountRoute = require("./routes/accountRoute")
-
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
 
@@ -110,7 +111,6 @@ app.use((req, res, next) => {
 // ================================
 // ERROR HANDLER
 // ================================
-const errorHandler = require("./middleware/errorHandler")
 app.use(errorHandler)
 
 module.exports = app

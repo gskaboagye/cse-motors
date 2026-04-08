@@ -5,7 +5,7 @@
     </h1>
 
     <nav class="account-nav">
-      <% if (loggedin && accountData) { %>
+      <% if (typeof loggedin !== "undefined" && loggedin && typeof accountData !== "undefined" && accountData) { %>
         <a href="/account/" aria-label="Go to account management">
           Welcome <%= accountData.account_firstname %>
         </a>
