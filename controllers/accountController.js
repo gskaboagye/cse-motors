@@ -97,6 +97,10 @@ accountCont.accountLogin = async function (req, res) {
   const { account_email, account_password } = req.body
 
   try {
+    if (!process.env.ACCESS_TOKEN_SECRET) {
+      throw new Error("ACCESS_TOKEN_SECRET is missing.")
+    }
+
     const accountData = await accountModel.getAccountByEmail(account_email)
 
     if (!accountData) {
@@ -204,6 +208,10 @@ accountCont.updateAccount = async function (req, res) {
   } = req.body
 
   try {
+    if (!process.env.ACCESS_TOKEN_SECRET) {
+      throw new Error("ACCESS_TOKEN_SECRET is missing.")
+    }
+
     const updateResult = await accountModel.updateAccount(
       account_firstname,
       account_lastname,

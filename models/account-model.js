@@ -27,7 +27,7 @@ async function registerAccount(
       account_email,
       account_password,
     ])
-    return result
+    return result.rows[0]
   } catch (error) {
     console.error("registerAccount error:", error)
     return null
@@ -39,7 +39,11 @@ async function registerAccount(
  * *************************** */
 async function checkExistingEmail(account_email) {
   try {
-    const sql = `SELECT account_id FROM account WHERE account_email = $1`
+    const sql = `
+      SELECT account_id
+      FROM account
+      WHERE account_email = $1
+    `
     const result = await pool.query(sql, [account_email])
     return result.rowCount > 0
   } catch (error) {
