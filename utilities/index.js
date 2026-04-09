@@ -37,25 +37,29 @@ Util.handleErrors = (fn) => (req, res, next) =>
 // CHECK JWT TOKEN
 // ================================
 Util.checkJWTToken = (req, res, next) => {
-  if (req.cookies && req.cookies.jwt) {
-    jwt.verify(
-      req.cookies.jwt,
-      process.env.ACCESS_TOKEN_SECRET,
-      function (err, accountData) {
-        if (err) {
-          req.flash("notice", "Please log in.")
-          res.clearCookie("jwt")
-          res.locals.loggedin = false
-          res.locals.accountData = null
-          return next()
-        }
+  const token = req.cookies ? req.cookies.jwt : null
 
-        res.locals.loggedin = true
-        res.locals.accountData = accountData
-        return next()
-      }
-    )
-  } else {
+  if (!token) {
+    res.locals.loggedin = false
+    res.locals.accountData = null
+    return next()
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    res.locals.loggedin = true
+    res.locals.accountData = decoded
+    return next()
+  } catch (error) {
+    console.error("JWT verification error:", error.message)
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+    })
+    res.locals.loggedin = false
+    res.locals.accountData = null
     return next()
   }
 }
