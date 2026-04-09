@@ -6,9 +6,6 @@ require("dotenv").config()
 
 const accountCont = {}
 
-/* ****************************************
- * Deliver login view
- * **************************************** */
 accountCont.buildLogin = async function (req, res) {
   let nav = await utilities.getNav()
   res.render("account/login", {
@@ -19,9 +16,6 @@ accountCont.buildLogin = async function (req, res) {
   })
 }
 
-/* ****************************************
- * Deliver registration view
- * **************************************** */
 accountCont.buildRegister = async function (req, res) {
   let nav = await utilities.getNav()
   res.render("account/register", {
@@ -34,9 +28,6 @@ accountCont.buildRegister = async function (req, res) {
   })
 }
 
-/* ****************************************
- * Process registration
- * **************************************** */
 accountCont.registerAccount = async function (req, res) {
   let nav = await utilities.getNav()
   const {
@@ -47,10 +38,7 @@ accountCont.registerAccount = async function (req, res) {
   } = req.body
 
   try {
-    console.log("REGISTER ATTEMPT:", account_email)
-
     const hashedPassword = await bcrypt.hash(account_password, 10)
-    console.log("PASSWORD HASHED")
 
     const regResult = await accountModel.registerAccount(
       account_firstname,
@@ -58,8 +46,6 @@ accountCont.registerAccount = async function (req, res) {
       account_email,
       hashedPassword
     )
-
-    console.log("REGISTER RESULT:", regResult)
 
     if (regResult) {
       req.flash("notice", `Congratulations, ${account_firstname}. Please log in.`)
@@ -94,19 +80,12 @@ accountCont.registerAccount = async function (req, res) {
   }
 }
 
-/* ****************************************
- * Process login request
- * **************************************** */
 accountCont.accountLogin = async function (req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
 
   try {
-    console.log("LOGIN ATTEMPT:", account_email)
-    console.log("ACCESS_TOKEN_SECRET exists:", !!process.env.ACCESS_TOKEN_SECRET)
-
     const accountData = await accountModel.getAccountByEmail(account_email)
-    console.log("ACCOUNT FOUND:", !!accountData)
 
     if (!accountData) {
       req.flash("notice", "Please check your credentials and try again.")
@@ -122,7 +101,6 @@ accountCont.accountLogin = async function (req, res) {
       account_password,
       accountData.account_password
     )
-    console.log("PASSWORD MATCH:", passwordMatch)
 
     if (!passwordMatch) {
       req.flash("notice", "Please check your credentials and try again.")
@@ -136,13 +114,9 @@ accountCont.accountLogin = async function (req, res) {
 
     delete accountData.account_password
 
-    const accessToken = jwt.sign(
-      accountData,
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
-    )
-
-    console.log("JWT CREATED")
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
+    })
 
     res.cookie("jwt", accessToken, {
       httpOnly: true,
@@ -152,7 +126,6 @@ accountCont.accountLogin = async function (req, res) {
       maxAge: 60 * 60 * 1000,
     })
 
-    console.log("COOKIE SET, REDIRECTING TO /account/")
     return res.redirect("/account/")
   } catch (error) {
     console.error("accountLogin controller error:", error)
@@ -166,12 +139,8 @@ accountCont.accountLogin = async function (req, res) {
   }
 }
 
-/* ****************************************
- * Deliver account management view
- * **************************************** */
 accountCont.buildManagement = async function (req, res) {
   let nav = await utilities.getNav()
-
   res.render("account/management", {
     title: "Account Management",
     nav,
@@ -179,9 +148,6 @@ accountCont.buildManagement = async function (req, res) {
   })
 }
 
-/* ****************************************
- * Deliver account update view
- * **************************************** */
 accountCont.buildUpdateView = async function (req, res) {
   let nav = await utilities.getNav()
   const account_id = parseInt(req.params.account_id)
@@ -203,17 +169,9 @@ accountCont.buildUpdateView = async function (req, res) {
   })
 }
 
-/* ****************************************
- * Process account update
- * **************************************** */
 accountCont.updateAccount = async function (req, res) {
   let nav = await utilities.getNav()
-  const {
-    account_id,
-    account_firstname,
-    account_lastname,
-    account_email,
-  } = req.body
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
 
   try {
     const updateResult = await accountModel.updateAccount(
@@ -265,9 +223,6 @@ accountCont.updateAccount = async function (req, res) {
   }
 }
 
-/* ****************************************
- * Process password update
- * **************************************** */
 accountCont.updatePassword = async function (req, res) {
   let nav = await utilities.getNav()
   const { account_id, account_password } = req.body
@@ -311,11 +266,7 @@ accountCont.updatePassword = async function (req, res) {
   }
 }
 
-/* ****************************************
- * Process logout
- * **************************************** */
 accountCont.logout = async function (req, res) {
-  console.log("LOGOUT HIT")
   res.clearCookie("jwt", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
