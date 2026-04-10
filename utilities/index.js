@@ -4,9 +4,6 @@ require("dotenv").config()
 
 const Util = {}
 
-// ================================
-// BUILD DYNAMIC NAVIGATION
-// ================================
 Util.getNav = async function () {
   const data = await invModel.getClassifications()
 
@@ -16,8 +13,7 @@ Util.getNav = async function () {
   data.forEach((row) => {
     list += `
       <li>
-        <a href="/inv/type/${row.classification_id}" 
-           title="See our inventory of ${row.classification_name} vehicles">
+        <a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">
           ${row.classification_name}
         </a>
       </li>`
@@ -27,15 +23,9 @@ Util.getNav = async function () {
   return list
 }
 
-// ================================
-// ERROR HANDLER WRAPPER
-// ================================
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next)
 
-// ================================
-// CHECK JWT TOKEN
-// ================================
 Util.checkJWTToken = (req, res, next) => {
   const token = req.cookies ? req.cookies.jwt : null
 
@@ -66,22 +56,14 @@ Util.checkJWTToken = (req, res, next) => {
   }
 }
 
-// ================================
-// CHECK LOGIN
-// ================================
 Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     return next()
   }
-
   req.flash("notice", "Please log in.")
   return res.redirect("/account/login")
 }
 
-// ================================
-// CHECK ACCOUNT TYPE
-// ONLY EMPLOYEE OR ADMIN
-// ================================
 Util.checkAccountType = (req, res, next) => {
   if (
     res.locals.loggedin &&
@@ -96,28 +78,21 @@ Util.checkAccountType = (req, res, next) => {
   return res.redirect("/account/login")
 }
 
-// ================================
-// BUILD CLASSIFICATION GRID
-// ================================
 Util.buildClassificationGrid = async function (data) {
   let grid
 
   if (data.length > 0) {
     grid = '<ul id="inv-display">'
-
     data.forEach((vehicle) => {
       grid += `
         <li>
-          <a href="/inv/detail/${vehicle.inv_id}" 
-             title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
-            <img src="${vehicle.inv_thumbnail}" 
-                 alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors">
+          <a href="/inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+            <img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors">
           </a>
           <div class="namePrice">
             <hr>
             <h2>
-              <a href="/inv/detail/${vehicle.inv_id}" 
-                 title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+              <a href="/inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
                 ${vehicle.inv_make} ${vehicle.inv_model}
               </a>
             </h2>
@@ -125,7 +100,6 @@ Util.buildClassificationGrid = async function (data) {
           </div>
         </li>`
     })
-
     grid += "</ul>"
   } else {
     grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
@@ -134,21 +108,14 @@ Util.buildClassificationGrid = async function (data) {
   return grid
 }
 
-// ================================
-// BUILD VEHICLE DETAIL HTML
-// ================================
 Util.buildVehicleDetail = function (vehicle) {
   return `
     <div class="vehicle-detail">
       <div class="vehicle-image">
-        <img 
-          src="${vehicle.inv_image}" 
-          alt="Image of ${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}">
+        <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}">
       </div>
-
       <div class="vehicle-info">
         <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h2>
-
         <p class="price">
           <strong>Price:</strong>
           ${new Intl.NumberFormat("en-US", {
@@ -156,12 +123,10 @@ Util.buildVehicleDetail = function (vehicle) {
             currency: "USD",
           }).format(vehicle.inv_price)}
         </p>
-
         <p class="mileage">
           <strong>Mileage:</strong>
           ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)} miles
         </p>
-
         <p><strong>Color:</strong> ${vehicle.inv_color}</p>
         <p><strong>Description:</strong> ${vehicle.inv_description}</p>
       </div>
@@ -169,9 +134,6 @@ Util.buildVehicleDetail = function (vehicle) {
   `
 }
 
-// ================================
-// BUILD CLASSIFICATION LIST
-// ================================
 Util.buildClassificationList = async function (classification_id = null) {
   const data = await invModel.getClassifications()
 

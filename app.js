@@ -13,44 +13,21 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
 const errorHandler = require("./middleware/errorHandler")
 
-// ================================
-// VIEW ENGINE
-// ================================
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 
-// ================================
-// LAYOUTS
-// ================================
 app.use(expressLayouts)
 app.set("layout", "layouts/main")
 
-// ================================
-// STATIC FILES
-// ================================
 app.use(express.static(path.join(__dirname, "public")))
-
-// ================================
-// BODY PARSING
-// ================================
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
-// ================================
-// COOKIE PARSER
-// ================================
 app.use(cookieParser())
 
-// ================================
-// TRUST PROXY FOR RENDER / PRODUCTION
-// ================================
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1)
 }
 
-// ================================
-// SESSION & FLASH
-// ================================
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "superSecretKey",
@@ -68,9 +45,6 @@ app.use(
 
 app.use(flash())
 
-// ================================
-// GLOBAL LOCALS
-// ================================
 app.use(async (req, res, next) => {
   res.locals.notice = req.flash("notice")
   res.locals.loggedin = false
@@ -87,50 +61,29 @@ app.use(async (req, res, next) => {
   next()
 })
 
-// ================================
-// JWT TOKEN CHECK
-// ================================
 app.use(utilities.checkJWTToken)
 
-// ================================
-// HEALTH CHECK ROUTE
-// ================================
 app.get("/healthz", (req, res) => {
   res.status(200).send("ok")
 })
 
-// ================================
-// ROUTES
-// ================================
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
 
-// ================================
-// HOME ROUTE
-// ================================
 app.get("/", (req, res) => {
   res.render("index", {
     title: "CSE Motors",
   })
 })
 
-// ================================
-// IGNORE FAVICON REQUESTS
-// ================================
 app.get("/favicon.ico", (req, res) => res.status(204).end())
 
-// ================================
-// 404 HANDLER
-// ================================
 app.use((req, res, next) => {
   const err = new Error("Page Not Found")
   err.status = 404
   next(err)
 })
 
-// ================================
-// ERROR HANDLER
-// ================================
 app.use(errorHandler)
 
 module.exports = app
