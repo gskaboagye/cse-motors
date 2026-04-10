@@ -38,7 +38,6 @@ Util.handleErrors = (fn) => (req, res, next) =>
 // ================================
 Util.checkJWTToken = (req, res, next) => {
   const token = req.cookies ? req.cookies.jwt : null
-  console.log("JWT COOKIE PRESENT:", !!token)
 
   if (!token) {
     res.locals.loggedin = false
@@ -48,8 +47,6 @@ Util.checkJWTToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-    console.log("JWT VERIFIED:", decoded.account_email)
-
     res.locals.loggedin = true
     res.locals.accountData = decoded
     return next()
@@ -87,6 +84,7 @@ Util.checkLogin = (req, res, next) => {
 // ================================
 Util.checkAccountType = (req, res, next) => {
   if (
+    res.locals.loggedin &&
     res.locals.accountData &&
     (res.locals.accountData.account_type === "Employee" ||
       res.locals.accountData.account_type === "Admin")
@@ -94,7 +92,7 @@ Util.checkAccountType = (req, res, next) => {
     return next()
   }
 
-  req.flash("notice", "You do not have permission to access that area.")
+  req.flash("notice", "Please log in with an Employee or Admin account.")
   return res.redirect("/account/login")
 }
 

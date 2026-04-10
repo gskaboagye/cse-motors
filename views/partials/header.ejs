@@ -5,18 +5,28 @@
     </h1>
 
     <nav class="account-nav">
-      <% if (typeof loggedin !== "undefined" && loggedin && typeof accountData !== "undefined" && accountData) { %>
+      
+      <% if (loggedin) { %>
+
+        <!-- Welcome link (Task requirement) -->
         <a href="/account/" aria-label="Go to account management">
           Welcome <%= accountData.account_firstname %>
         </a>
+
+        <!-- Logout link -->
         <a href="/account/logout" aria-label="Log out of your account">
           Logout
         </a>
+
       <% } else { %>
+
+        <!-- Only show when NOT logged in -->
         <a href="/account/login" aria-label="Go to your account">
           My Account
         </a>
+
       <% } %>
+
     </nav>
   </div>
 </header>
