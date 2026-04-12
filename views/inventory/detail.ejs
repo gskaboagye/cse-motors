@@ -3,3 +3,22 @@
 <section class="detail-container" aria-label="Vehicle Details">
   <%- detailHTML %>
 </section>
+
+<!-- =========================
+     FAVORITES FEATURE
+========================= -->
+<% if (loggedin && accountData) { %>
+  <section class="favorite-section">
+    <form action="/favorites/add" method="post">
+      <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+      
+      <button type="submit" class="btn-favorite">
+        ❤️ Save to Favorites
+      </button>
+    </form>
+  </section>
+<% } else { %>
+  <p class="login-prompt">
+    <a href="/account/login">Log in</a> to save this vehicle to your favorites.
+  </p>
+<% } %>

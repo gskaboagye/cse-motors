@@ -4,7 +4,7 @@
   </div>
 <% } %>
 
-<% if (errors) { %>
+<% if (errors && errors.array().length > 0) { %>
   <ul class="errors">
     <% errors.array().forEach(error => { %>
       <li><%= error.msg %></li>
@@ -14,19 +14,47 @@
 
 <h1><%= title %></h1>
 
-<% if (accountData && (accountData.account_type === "Employee" || accountData.account_type === "Admin")) { %>
-  <h2>Welcome <%= accountData.account_firstname %></h2>
-<% } %>
-
-<p>
-  <a href="/account/update/<%= accountData.account_id %>" title="Update account information">
-    Update Account Information
-  </a>
+<!-- =========================
+     USER GREETING
+========================= -->
+<p class="welcome-message">
+  Welcome back, <strong><%= accountData.account_firstname %></strong>!
 </p>
 
-<% if (accountData && (accountData.account_type === "Employee" || accountData.account_type === "Admin")) { %>
-  <h3>Inventory Management</h3>
-  <p>
-    <a href="/inv/" title="Go to inventory management">Manage Inventory</a>
-  </p>
+<!-- =========================
+     ACCOUNT ACTIONS
+========================= -->
+<section class="account-actions">
+  <h2>Account Options</h2>
+
+  <ul>
+    <li>
+      <a href="/account/update/<%= accountData.account_id %>" title="Update account information">
+        Update Account Information
+      </a>
+    </li>
+
+    <li>
+      <a href="/favorites" title="View your saved vehicles">
+        View My Favorites
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- =========================
+     INVENTORY (EMPLOYEE/ADMIN ONLY)
+========================= -->
+<% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
+
+  <section class="inventory-management">
+    <h2>Inventory Management</h2>
+
+    <p>
+      <a href="/inv/" title="Go to inventory management">
+        Manage Inventory
+      </a>
+    </p>
+  </section>
+
 <% } %>
