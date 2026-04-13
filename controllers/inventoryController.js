@@ -212,13 +212,8 @@ async function buildByClassificationId(req, res, next) {
     const nav = await utilities.getNav()
     const classification_id = parseInt(req.params.classificationId)
 
-    const inventoryData = await invModel.getInventoryByClassificationId(classification_id)
-    const classificationsData = await invModel.getClassifications()
-
-    const inventory = inventoryData.rows ? inventoryData.rows : inventoryData
-    const classifications = classificationsData.rows
-      ? classificationsData.rows
-      : classificationsData
+    const inventory = await invModel.getInventoryByClassificationId(classification_id)
+    const classifications = await invModel.getClassifications()
 
     const selectedClassification = classifications.find(
       (c) => c.classification_id == classification_id
@@ -262,6 +257,7 @@ async function getInventoryItem(req, res, next) {
       title: `${data.inv_make} ${data.inv_model}`,
       nav,
       detailHTML,
+      vehicle: data, // REQUIRED for favorites form
     })
   } catch (error) {
     next(error)

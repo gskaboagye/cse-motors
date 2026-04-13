@@ -1,3 +1,9 @@
+<% if (typeof notice !== "undefined" && notice.length > 0) { %>
+  <div class="notice">
+    <%= notice[0] %>
+  </div>
+<% } %>
+
 <h1><%= title %></h1>
 
 <section class="detail-container" aria-label="Vehicle Details">
@@ -7,18 +13,25 @@
 <!-- =========================
      FAVORITES FEATURE
 ========================= -->
-<% if (loggedin && accountData) { %>
+<% if (loggedin && accountData && vehicle) { %>
+
   <section class="favorite-section">
     <form action="/favorites/add" method="post">
-      <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
       
+      <!-- REQUIRED: vehicle id -->
+      <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+
       <button type="submit" class="btn-favorite">
         ❤️ Save to Favorites
       </button>
+
     </form>
   </section>
+
 <% } else { %>
+
   <p class="login-prompt">
     <a href="/account/login">Log in</a> to save this vehicle to your favorites.
   </p>
+
 <% } %>
