@@ -18,9 +18,20 @@ async function addFavorite(account_id, inv_id) {
 async function getFavoritesByAccountId(account_id) {
   try {
     const sql = `
-      SELECT f.favorite_id, i.*
+      SELECT
+        f.favorite_id,
+        f.account_id,
+        f.inv_id,
+        i.inv_make,
+        i.inv_model,
+        i.inv_year,
+        i.inv_thumbnail,
+        i.inv_price,
+        i.inv_miles,
+        i.inv_color
       FROM favorite f
-      JOIN inventory i ON f.inv_id = i.inv_id
+      JOIN inventory i
+        ON f.inv_id = i.inv_id
       WHERE f.account_id = $1
       ORDER BY f.created_at DESC;
     `
@@ -36,7 +47,8 @@ async function removeFavorite(favorite_id, account_id) {
   try {
     const sql = `
       DELETE FROM favorite
-      WHERE favorite_id = $1 AND account_id = $2
+      WHERE favorite_id = $1
+        AND account_id = $2
       RETURNING *;
     `
     const result = await pool.query(sql, [favorite_id, account_id])
@@ -52,7 +64,8 @@ async function checkExistingFavorite(account_id, inv_id) {
     const sql = `
       SELECT favorite_id
       FROM favorite
-      WHERE account_id = $1 AND inv_id = $2;
+      WHERE account_id = $1
+        AND inv_id = $2;
     `
     const result = await pool.query(sql, [account_id, inv_id])
     return result.rows[0]

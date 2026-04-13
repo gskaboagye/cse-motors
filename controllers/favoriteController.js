@@ -23,7 +23,7 @@ favoriteCont.addFavorite = async function (req, res) {
 
   if (!inv_id) {
     req.flash("notice", "Invalid vehicle selection.")
-    return res.redirect("/account/favorites")
+    return res.redirect("/favorites")
   }
 
   const existing = await favoriteModel.checkExistingFavorite(account_id, inv_id)
@@ -50,18 +50,18 @@ favoriteCont.removeFavorite = async function (req, res) {
 
   if (!favorite_id) {
     req.flash("notice", "Invalid favorite selection.")
-    return res.redirect("/account/favorites")
+    return res.redirect("/favorites")
   }
 
   const result = await favoriteModel.removeFavorite(favorite_id, account_id)
 
   if (result) {
-    req.flash("notice", "Favorite removed.")
+    req.flash("notice", "Favorite removed successfully.")
   } else {
     req.flash("notice", "Could not remove favorite.")
   }
 
-  return res.redirect("/account/favorites")
+  return res.redirect("/favorites")
 }
 
 module.exports = favoriteCont
